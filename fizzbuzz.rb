@@ -1,21 +1,22 @@
-fizzbuzz = Array.new
+count = Array.new
 
-def fizzbuzz.endpoint(number) do |i|
+fizzbuzz(number) do |i|
 	i == 1
-	fizzbuzz << i
-	i.next
+	count << i
 	if i==number 
 		break
 
-fizzbuzz.each do |i|
 if (i%3==0 && i%5 != 0) 
 	puts "Fizz"
+	i.next
 elsif (i%3 != 0 && i%5 == 0) 
 	puts "Buzz"
+	i.next
 elsif (i%3==0 && i%5 == 0) 
 	puts "FizzBuzz"
+	i.next
 else 
 	puts i
+	i.next
 end
-end
-fizzbuzz.endpoint(100)
+fizzbuzz(100)
