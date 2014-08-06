@@ -1,7 +1,6 @@
-count = Array.new
-
 def fizzbuzz(a=1,e)
-while a <= e do
+	count = Array.new
+while a <= e
 	count.push(a)
 	a.next
 end
@@ -16,4 +15,5 @@ else
 	puts "#{i}" + /n
 end
 end
-fizzbuzz(1,100)
+end
+puts fizzbuzz(1,100)
