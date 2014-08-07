@@ -6,13 +6,13 @@ while a <= e
 end
 count.each do |i|
 if (i%3==0 && i%5 != 0) 
-	puts "Fizz"+/n
+	puts "Fizz"
 elsif (i%3 != 0 && i%5 == 0) 
-	puts "Buzz" + /n
+	puts "Buzz"
 elsif (i%3==0 && i%5 == 0) 
-	puts "FizzBuzz" + /n
+	puts "FizzBuzz"
 else 
-	puts "#{i}" + /n
+	puts "#{i}"
 end
 end
 end
