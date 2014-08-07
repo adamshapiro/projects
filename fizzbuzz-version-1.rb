@@ -11,4 +11,4 @@ else
 end
 end
 end
-puts fizzbuzz(1,20)
+puts fizzbuzz(20)
