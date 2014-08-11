@@ -20,3 +20,16 @@ def euler2(num)
 	end
 	return b
 end
+
+def euler4
+	a=[]
+	(100..999).each do |x|
+		(100..999).each do |y|
+			if (x*y).to_s.reverse.to_i == (x*y)
+				a << (x*y)
+			end
+		end
+	end
+	a.sort!
+	return a[-1]
+end
