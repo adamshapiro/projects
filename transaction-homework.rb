@@ -2,14 +2,12 @@ require 'CSV'
 
 f = File.open('C:\Users\Adam Shapiro\Desktop\transaction.txt')
 
-@data = CSV.parse(f.read)
+@data = CSV.parse(f.read, {:headers=>true})
 
 def customers(array)
 	a = []
 	array.each do |names|
-		unless array.index(names) == 0
-			a << names[2]
-		end
+		a << names[2]
 	end
 	a.uniq!
 end
@@ -17,10 +15,7 @@ end
 def charges(array)
 	a=[]
 	array.each do |charge|
-		unless array.index(charge) == 0
-			charge[21]
-			a << charge[21]
-		end
+		a << charge[21]
 	end
 	a.map{ |e| e.to_i }.inject{|sum,x| sum + x}
 end
