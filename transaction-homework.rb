@@ -18,8 +18,9 @@ def charges(array)
 	a=[]
 	array.each do |charge|
 		unless array.index(charge) == 0
+			charge[21]
 			a << charge[21]
 		end
 	end
-	a.inject{|sum,x| sum + x}
+	a.map{ |e| e.to_i }.inject{|sum,x| sum + x}
 end
