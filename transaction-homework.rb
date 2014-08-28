@@ -18,7 +18,6 @@ def charges(array)
 	a=[]
 	array.each do |charge|
 		unless array.index(charge) == 0
-			charge[21].to_i
 			a << charge[21]
 		end
 	end
