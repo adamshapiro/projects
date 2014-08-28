@@ -13,9 +13,9 @@ def customers(array)
 end
 
 def charges(array)
-	a=[]
+	a=0
 	array.each do |charge|
-		a << charge[21]
+		a += charge[21].to_i
 	end
-	a.map{ |e| e.to_i }.inject{|sum,x| sum + x}
+	return a
 end
