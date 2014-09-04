@@ -6,15 +6,18 @@ f = File.open('C:\Users\Adam Shapiro\Desktop\dictionary.txt')
 
 def anagram
 	@data.each do |text|
-		@dict_hash[text.split.sort.join] << text
+		if @dict_hash.key?((text.split('').sort - ["\n"]).join) == true
+			@dict_hash[(text.split('').sort - ["\n"]).join] << text
+		else
+			@dict_hash[(text.split('').sort - ["\n"]).join] = []
+			@dict_hash[(text.split('').sort - ["\n"]).join] << text
+		end
 	end
-	j = []
+	j = @dict_hash.keys.first
 	@dict_hash.each do |k,v|
-		j.delete_if {|less| @dict_hash[less].count < v.count}
-		j << k
+		if v.count > @dict_hash[j].count
+			j=k
+		end
 	end
-	if @dict_hash[j.last].count < @dict_hash[j.first].count
-		j.delete(j.last)
-	end
-	return j
+	return @dict_hash[j]
 end
