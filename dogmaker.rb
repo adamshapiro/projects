@@ -1,8 +1,4 @@
-class Dog
-	def self.descendants
-		ObjectSpace.each_object(Class).select {|a| a < self}
-	end
-end
+class Dog; end
 
 class DogFactory
 	def self.create dog_name
