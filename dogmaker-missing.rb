@@ -1,11 +1,15 @@
 class Dog
 	def self.bark
-		"bark like a #{self.class.name}"
+		"bark like a #{self.name}"
 	end	
 end
 
 class DogFactory
 	def self.method_missing(meth)
-		/^create_(.*)/.match(meth) {|m| m[1] = Class.new(Dog)}
+		if m = /^create_(.*)/.match(meth).captures
+			Object.const_set(m[0],Class.new(Dog))
+		else
+			super
+		end
 	end
 end
