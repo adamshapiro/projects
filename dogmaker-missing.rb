@@ -7,7 +7,7 @@ end
 class DogFactory
 	def self.method_missing(meth)
 		if m = /^create_(.*)/.match(meth).captures
-			Object.const_set(m[0],Class.new(Dog))
+			Object.const_set(m[0].capitalize,Class.new(Dog))
 		else
 			super
 		end
