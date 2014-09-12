@@ -48,11 +48,10 @@ def new_game
 	puts "Hello Hero! What is your name?"
 	new_name = gets.strip!
 	hero = Player.new({:player_name => new_name})
-	begin
-		puts "How long would you like a side of the map to be?"
-		map_size = gets.strip.to_i
-	rescue
-		puts "Please enter a numeral for the length."
+	puts "How long would you like a side of the map to be?"
+	map_size = gets.strip.to_i
+	while map_size <= 0
+		puts "Please enter a numeral greater than 0 for the length."
 		map_size = gets.strip.to_i
 	end
 	grid_sizer(map_size)
@@ -151,4 +150,4 @@ def new_game
 	end
 end
 
-puts "To start a game, use the #new_game method. A1 is the bottom left of the grid for all games."
+puts "To start a game, use the #new_game method. A1 is the bottom left of the grid for all games. Recommended map size: 3-5."
