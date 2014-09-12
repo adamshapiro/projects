@@ -48,8 +48,13 @@ def new_game
 	puts "Hello Hero! What is your name?"
 	new_name = gets.strip!
 	hero = Player.new({:player_name => new_name})
-	puts "How long would you like a side of the map to be?"
-	map_size = gets.strip.to_i
+	begin
+		puts "How long would you like a side of the map to be?"
+		map_size = gets.strip.to_i
+	rescue
+		puts "Please enter a numeral for the length."
+		map_size = gets.strip.to_i
+	end
 	grid_sizer(map_size)
 	map_size.times do |row|
 		@friend_locations = []
@@ -97,25 +102,25 @@ def new_game
 			movement = gets.chomp.upcase
 			if movement == "UP"
 				@x_curr += 1
-				if @grid[@x_curr][@y_curr]
+				if @grid[@x_curr]
 					@curr_location = @grid[@x_curr][@y_curr]
 					puts "Your location is now #{@curr_location}. Your destination is #{@destination}."
 				else
 					puts "You've fallen off the map! Go back to the start. Your location is now #{@start_location}. Your destination is #{@destination}."
 					@curr_location = @start_location
 					@x_curr = @x_start
-					@y_start = @y_curr
+					@y_curr = @y_start
 				end
 			elsif movement == "DOWN"
 				@x_curr -= 1
-				if @grid[@x_curr][@y_curr]
-					@curr_location = @grid[@x_curr][@y_curr]
-					puts "Your location is now #{@curr_location}. Your destination is #{@destination}."
-				else
+				if @x_curr < 0
 					puts "You've fallen off the map! Go back to the start. Your location is now #{@start_location}. Your destination is #{@destination}."
 					@curr_location = @start_location
 					@x_curr = @x_start
-					@y_start = @y_curr
+					@y_curr = @y_start
+				elsif @grid[@x_curr][@y_curr]
+					@curr_location = @grid[@x_curr][@y_curr]
+					puts "Your location is now #{@curr_location}. Your destination is #{@destination}."
 				end
 			elsif movement == "RIGHT"
 				@y_curr += 1
@@ -126,18 +131,18 @@ def new_game
 					puts "You've fallen off the map! Go back to the start. Your location is now #{@start_location}. Your destination is #{@destination}."
 					@curr_location = @start_location
 					@x_curr = @x_start
-					@y_start = @y_curr
+					@y_curr = @y_start
 				end
 			elsif movement == "LEFT"
 				@y_curr -= 1
-				if @grid[@x_curr][@y_curr]
-					@curr_location = @grid[@x_curr][@y_curr]
-					puts "Your location is now #{@curr_location}."
-				else
-					puts "You've fallen off the map! Go back to the start. Your location is now #{@start_location}."
+				if @y_curr < 0
+					puts "You've fallen off the map! Go back to the start. Your location is now #{@start_location}. Your destination is #{@destination}."
 					@curr_location = @start_location
 					@x_curr = @x_start
-					@y_start = @y_curr
+					@y_curr = @y_start
+				elsif @grid[@x_curr][@y_curr]
+					@curr_location = @grid[@x_curr][@y_curr]
+					puts "Your location is now #{@curr_location}. Your destination is #{@destination}."
 				end
 			else
 				puts "I'm sorry, that's not an option. Please choose up, down, left, or right."
