@@ -6,21 +6,9 @@ class Player
 end
 
 class Friendly
-	def initialize(location)
-		@location = location
-	end
-	def location
-		@location
-	end
 end
 
 class Enemy
-	def initialize(location)
-			@location = location
-	end
-	def location
-		@location
-	end
 end
 
 @alphabet = []
@@ -55,17 +43,17 @@ def new_game
 		map_size = gets.strip.to_i
 	end
 	grid_sizer(map_size)
-	map_size.times do |row|
+	((map_size ^ 2) / 4).times do |row|
 		@friend_locations = []
 		@enemy_locations = []
 		x_coordinate = rand(0..map_size - 1)
 		y_coordinate = rand(0..map_size - 1)
 		friend_or_foe = rand(1..2)
 		if friend_or_foe == 1
-			instance_variable_set("@person#{row}",Friendly.new(@grid[x_coordinate][y_coordinate]))
+			instance_variable_set("@person#{row}",Friendly.new)
 			@friend_locations << @grid[x_coordinate][y_coordinate]
 		elsif friend_or_foe == 2
-			instance_variable_set("@person#{row}",Enemy.new(@grid[x_coordinate][y_coordinate]))
+			instance_variable_set("@person#{row}",Enemy.new)
 			@enemy_locations << @grid[x_coordinate][y_coordinate]
 		end
 	end
@@ -79,7 +67,7 @@ def new_game
 	@curr_location = @start_location
 	@destination = @grid[@x_final][@y_final]
 	puts "You begin your journey on the space #{@start_location}. Your destination is #{@destination}."
-	while play == true
+	while true
 		if @curr_location == @destination
 			return "Congratulations! You win!"
 			break
