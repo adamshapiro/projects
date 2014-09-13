@@ -2,13 +2,8 @@ class Player
 	attr_accessor :player_name
 	def initialize (options = {})
 		@player_name = options[:player_name] || "Hero"
+		@health = options[:player_health] || 100
 	end
-end
-
-class Friendly
-end
-
-class Enemy
 end
 
 @alphabet = []
@@ -31,11 +26,15 @@ def grid_sizer(square = 5)
 end
 
 def new_game
-	play = true
-	@health = 10
 	puts "Hello Hero! What is your name?"
-	new_name = gets.strip!
-	hero = Player.new({:player_name => new_name})
+	new_name = gets.strip
+	puts "How much health does your hero have?"
+	new_health = gets.strip.to_i
+	while new_health <= 10
+		puts "Please enter a number greater than or equal to 10 for your health."
+		new_health = gets.strip.to_i
+	end
+	hero = Player.new({:player_name => new_name, :player_health => new_health})
 	puts "How long would you like a side of the map to be?"
 	map_size = gets.strip.to_i
 	while map_size <= 0
@@ -50,10 +49,8 @@ def new_game
 		y_coordinate = rand(0..map_size - 1)
 		friend_or_foe = rand(1..2)
 		if friend_or_foe == 1
-			instance_variable_set("@person#{row}",Friendly.new)
 			@friend_locations << @grid[x_coordinate][y_coordinate]
 		elsif friend_or_foe == 2
-			instance_variable_set("@person#{row}",Enemy.new)
 			@enemy_locations << @grid[x_coordinate][y_coordinate]
 		end
 	end
@@ -73,12 +70,12 @@ def new_game
 			break
 		elsif @friend_locations.include?( @curr_location)
 			puts "You've met a friend! He heals you a bit!"
-			@health += rand(1..3)
+			@health += ((@health/10) * rand(1..6))
 			puts "Your health is now #{@health}. The friend left."
 			@friend_locations.delete(@curr_location)
 		elsif @enemy_locations.include? (@curr_location)
 			puts "Oh no! You've met an enemy! He hurts you a bit!"
-			@health -= rand(2..5)
+			@health -= ((@health/10) * rand(1..6))
 			puts "Your health is now #{@health}. The enemy left."
 			@enemy_locations.delete(@curr_location)
 		elsif @health <= 0
