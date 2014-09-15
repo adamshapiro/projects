@@ -1,11 +1,3 @@
-class Player
-	attr_accessor :player_name
-	def initialize (options = {})
-		@player_name = options[:player_name] || "Hero"
-		@health = options[:player_health] || 100
-	end
-end
-
 @alphabet = []
 ("A".."Z").each do |letter|
 	@alphabet << letter
@@ -34,7 +26,6 @@ def new_game(hidden = false)
 		puts "Please enter a number greater than or equal to 10 for your health."
 		new_health = gets.strip.to_i
 	end
-	hero = Player.new({:player_name => new_name, :player_health => new_health})
 	puts "How long would you like a side of the map to be?"
 	map_size = gets.strip.to_i
 	while map_size <= 0
