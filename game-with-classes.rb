@@ -2,6 +2,7 @@ class Player
 	attr_accessor :health,:new_hero,:new_hero_health,:new_map_size
 	def initialize(options = {})
 		@health = options[:health] || 100
+		@start_health = options[:health] || 100
 	end
 	def health
 		@health
@@ -48,6 +49,9 @@ class Player
 			@npc_num += 1
 		end
 		puts "Your location is now #{@curr_location}. Your destination is #{@destination}."
+	end
+	def start_health
+		@start_health
 	end
 	def grid_map
 		@grid_map
@@ -108,12 +112,12 @@ class Player
 				if @curr_location == npc.location
 					if npc.class == Friendly
 						puts "You've met a friend! He heals you a bit!"
-						self.health_plus(npc.damage(self.health))
+						self.health_plus(npc.damage(self.start_health))
 						puts "Your health is now #{self.health}. The friend left."
 						npc.go_away
 					elsif npc.class == Enemy
 						puts "Oh no! You've met an enemy! He hurts you a bit!"
-						self.health_minus(npc.damage(self.health))
+						self.health_minus(npc.damage(self.start_health))
 						puts "Your health is now #{self.health}. The enemy left."
 						npc.go_away
 					end
