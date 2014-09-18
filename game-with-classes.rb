@@ -138,7 +138,10 @@ class Player
 		while @@game
 			puts "Where would you like to move?"
 			movement = gets.strip
-			new_hero.send("move_#{movement}")
+			if defined? new_hero.send("move_#{movement}") == "method"
+			else
+				puts "Please choose up, down, left, or right."
+			end
 		end
 	end
 end
