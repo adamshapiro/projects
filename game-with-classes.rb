@@ -1,39 +1,5 @@
-
-def grid_sizer(square = 5)
-	@grid_map = []
-	columns = (1..square)
-	square.times do |row|
-		row_array = []
-		columns.each do |size|
-			row_array << "#{@alphabet[row]}#{size}"
-		end
-		@grid_map << row_array
-	end
-	@x_curr = rand(0..square -1)
-	@x_start = @x_curr
-	@y_curr = rand(0..square -1)
-	@y_start = @y_curr
-	@x_final = rand(0..square -1)
-	@y_final = rand(0..square -1)
-	@start_location = @grid_map[@x_start][@y_start]
-	@curr_location = @start_location
-	@destination = @grid_map[@x_final][@y_final]
-	npc_num=1
-	@people = ""
-	((square * square) / 4).times do |row|
-		friend_or_foe = rand(1..2)
-		if friend_or_foe == 1
-			instance_variable_set("@person#{npc_num}",Friendly.new)
-		elsif friend_or_foe == 2
-			instance_variable_set("@person#{npc_num}",Enemy.new)
-		end
-		@people += "person#{npc_num}"
-		npc_num += 1
-	end
-end
-
 class Player
-	attr_accessor :health
+	attr_accessor :health,:new_hero,:new_hero_health,:new_map_size
 	def initialize(options = {})
 		@health = options[:health] || 100
 	end
@@ -155,9 +121,24 @@ class Player
 			end
 			if self.health <= 0
 				puts "You've died! Game over!"
+				@@game = false
 			elsif @curr_location == @destination
 				puts "Congratulations! You win!"
+				@@game = false
 			end
+		end
+	end
+	def self.start_game(param = {})
+		new_hero = param[:new_hero] || "@hero"
+		new_hero_health = param[:new_hero_health] || 100
+		new_map_size = param[:new_map_size] || 5
+		new_hero = instance_variable_set(new_hero,Player.new({:health => new_hero_health}))
+		new_hero.grid_make(new_map_size)
+		@@game = true
+		while @@game
+			puts "Where would you like to move?"
+			movement = gets.strip
+			new_hero.send("move_#{movement}")
 		end
 	end
 end
@@ -194,4 +175,4 @@ class Enemy
 	end
 end
 
-puts "To begin a new game, start by creating a new instance of Player.\nThen, call the grid_make method on your hero (the default map size is 5, but you can choose a different number as an argument for the method).\nFinally, move your player to the destination using the methods move_(up, down, left, or right).\nA1 is the bottom left of the map."
+puts "To begin a new game, enter Player.start_game"
